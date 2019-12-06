@@ -214,6 +214,11 @@ input[type="submit"].postButton {
   color: #686e77;
 }
 
+.posts {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
 .postBox {
   width: 100%;
   border: 1px solid #dedede;
