@@ -111,22 +111,9 @@ var UserController  = {
             }
         }).exec(function(err, user){
             res.redirect(`/user/${req.body.userId}`)
-        }).catch((err) => res.redirect("error", {error: err, message: "Oops"}))
+        })
     },
     GetFriends: function(req, res) {
-        if(!req.cookies.userId) {
-            res.redirect ("/")
-        }
-        User.findOne({_id: req.cookies.userId })
-                        .populate({
-                            path: 'friends',
-                            model: 'User'
-                        }).exec(function(err, docs) {
-                            if(err) { throw err}
-                            res.render('user/friends', {user:docs})
-                        });
-    },
-    GetFriendRequests: function(req, res) {
         if(!req.cookies.userId) {
             res.redirect ("/")
         }
@@ -134,9 +121,12 @@ var UserController  = {
                 .populate({
                     path: 'friendRequests',
                     model: 'User'
+                }).populate({
+                    path: 'friends',
+                    model: 'User'
                 }).exec(function(err, docs) {
                     if(err) { throw err}
-                    res.render('user/requests', {user:docs})
+                    res.render('user/friends', {user:docs})
                 })
     },
     AcceptFriendRequest: async function(req, res) {
@@ -147,7 +137,7 @@ var UserController  = {
         await User.updateOne({_id: req.cookies.userId}, { $push: { friends: req.params.id }})
         await User.updateOne({_id: req.params.id}, {$push: {friends: req.cookies.userId }})
         
-        res.redirect("/user/requests")
+        res.redirect("/user/friends")
     },
     DeclineFriendRequest: function(req, res) {
         if(!req.cookies.userId) {
@@ -158,8 +148,8 @@ var UserController  = {
                 friendRequests: req.params.id
             }
         }).exec(function(err, user){
-            res.redirect('/user/requests')
-        }).catch((err) => res.redirect("error", {error: err, message: "Oops"}))
+            res.redirect('/user/friends')
+        })
     }
 }
 
