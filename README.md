@@ -197,6 +197,7 @@ so that integration tests do not interact with the development server.
 ## Retro Board
 
 [Retro Board Week1](https://github.com/robbaile/acebook-robAndTheMeerkats/tree/master/public/images/retro_week1.png)
+
 [Retro Board Week2](https://github.com/robbaile/acebook-robAndTheMeerkats/tree/master/public/images/retro_week2.png)
 
 <!-- Reflections -->
